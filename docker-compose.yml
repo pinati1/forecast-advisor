@@ -4,6 +4,9 @@ services:
   backend:
     build:
       context: ./backend
+    environment:
+      - MONGO_URL=mongodb://mongo:27017
+      - MONGO_DB_NAME=surf_forecast
     ports:
       - "8000:8000"
     healthcheck:
@@ -33,7 +36,20 @@ services:
     networks:
       - app-network
 
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - app-network
+
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  mongo-data:
 
