@@ -1,31 +1,37 @@
-from typing import Optional
+from pymongo import MongoClient
 
-from motor.motor_asyncio import AsyncIOMotorClient, AsyncIOMotorDatabase
-import os
+class MongoHandler:
+    def __init__(self, connection_string, db_name):
+        """
+        Initializes the connection to MongoDB.
+        """
+        # Create a MongoClient to the running instance
+        self.client = MongoClient(connection_string)
+        # Access the specific database
+        self.db = self.client[db_name]
 
+    def get_documents(self, collection_name, query={}):
+        """
+        Retrieves documents matching the query from the specified collection.
+        Returns a list of documents.
+        """
+        # Use find() to search for documents in the collection
+        collection = self.db[collection_name]
+        return list(collection.find(query))
 
-MONGO_URL = os.getenv("MONGO_URL", "mongodb://mongo:27017")
-MONGO_DB_NAME = os.getenv("MONGO_DB_NAME", "surf_forecast")
+    def delete_document(self, collection_name, query):
+        """
+        Deletes a single document matching the query.
+        """
+        # Use delete_one() to remove a single document
+        collection = self.db[collection_name]
+        return collection.delete_one(query)
 
-
-client: Optional[AsyncIOMotorClient] = None
-db: Optional[AsyncIOMotorDatabase] = None
-
-
-async def connect_to_mongo() -> None:
-  global client, db
-
-  if client is not None:
-      return
-
-  client = AsyncIOMotorClient(MONGO_URL)
-  db = client[MONGO_DB_NAME]
-
-
-async def close_mongo_connection() -> None:
-  global client
-
-  if client is not None:
-      client.close()
-      client = None
+    def insert_document(self, collection_name, data):
+        """
+        Inserts a single document (dictionary) into the specified collection.
+        """
+        # Use insert_one() to add a document
+        collection = self.db[collection_name]
+        return collection.insert_one(data)
 
