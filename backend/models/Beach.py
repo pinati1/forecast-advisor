@@ -1,9 +1,9 @@
-from typing import Optional
+
 from pydantic import BaseModel
 
 
 class Beach(BaseModel):
-    id: str
+    id: str 
     name: str
     location: str
     latitude: float
