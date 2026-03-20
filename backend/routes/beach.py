@@ -2,7 +2,7 @@ from typing import Optional, List
 
 from fastapi import APIRouter
 
-from models import Beach
+from models.beach import Beach
 
 
 router = APIRouter(prefix="/beaches", tags=["beaches"])

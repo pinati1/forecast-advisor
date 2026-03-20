@@ -1,19 +1,16 @@
 import httpx
 from typing import Optional, Dict, Any
-from db import MongoHandler  # Import your handler
-import os
 
-# Grab the MongoDB connection details from your environment
-MONGO_URL = os.getenv("MONGO_URL", "mongodb://localhost:27017")
-DB_NAME = os.getenv("MONGO_DB_NAME")
 
-# OSRM public API for driving distances
+
+
+
 OSRM_BASE_URL = "http://router.project-osrm.org/table/v1/driving"
 
-async def get_closest_beach_real_distance(user_lat: float, user_lng: float) -> Optional[Dict[str, Any]]:
+async def get_closest_beach_real_distance(db_handler,user_lat: float, user_lng: float) -> Optional[Dict[str, Any]]:
     # Initialize your DB handler
-    handler = MongoHandler(MONGO_URL, DB_NAME)
-    collection = handler.db["beaches"]
+
+    collection = db_handler.db["beaches"]
     
     # --- STEP 1: Fast Aerial Filter using MongoDB ---
     pipeline = [
@@ -34,7 +31,6 @@ async def get_closest_beach_real_distance(user_lat: float, user_lng: float) -> O
     candidate_beaches = list(collection.aggregate(pipeline))
     
     if not candidate_beaches:
-        handler.close_connection()
         return None
 
     # --- STEP 2: Calculate Real Driving Distances ---
@@ -54,7 +50,6 @@ async def get_closest_beach_real_distance(user_lat: float, user_lng: float) -> O
             response.raise_for_status()
             data = response.json()
     except httpx.RequestError:
-        handler.close_connection()
         return candidate_beaches[0]  # Fallback to aerial distance if OSRM fails
     
     # --- STEP 3: Sort by Real Distance ---
@@ -69,7 +64,6 @@ async def get_closest_beach_real_distance(user_lat: float, user_lng: float) -> O
             shortest_distance = dist
             best_beach = candidate_beaches[i - 1]
             
-    handler.close_connection()
 
     if best_beach:
         best_beach["driving_distance_meters"] = shortest_distance
