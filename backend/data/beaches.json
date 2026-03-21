@@ -1,0 +1,156 @@
+[
+  {
+    "id": "il-sokolov-nahariya",
+    "name": "Sokolov Beach",
+    "location": "Nahariya North",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [35.0895, 33.0115]
+    },
+    "country": "Israel",
+    "city": "Nahariya"
+  },
+  {
+    "id": "il-backdoor-haifa",
+    "name": "Backdoor (Bat Galim)",
+    "location": "Haifa Bay",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [34.9835, 32.8318]
+    },
+    "country": "Israel",
+    "city": "Haifa"
+  },
+  {
+    "id": "il-casino-haifa",
+    "name": "Casino Beach",
+    "location": "Bat Galim South",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [34.9790, 32.8285]
+    },
+    "country": "Israel",
+    "city": "Haifa"
+  },
+  {
+    "id": "il-beit-yanai",
+    "name": "Beit Yanai",
+    "location": "Alexander River",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [34.8580, 32.3985]
+    },
+    "country": "Israel",
+    "city": "Beit Yanai"
+  },
+  {
+    "id": "il-kontiki-netanya",
+    "name": "Kontiki Beach",
+    "location": "Netanya Pier",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [34.8435, 32.3320]
+    },
+    "country": "Israel",
+    "city": "Netanya"
+  },
+  {
+    "id": "il-poleg-netanya",
+    "name": "Poleg Beach",
+    "location": "South Netanya",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [34.8340, 32.2755]
+    },
+    "country": "Israel",
+    "city": "Netanya"
+  },
+  {
+    "id": "il-zvulun-herzliya",
+    "name": "Zvulun Beach",
+    "location": "Herzliya North",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [34.7990, 32.1715]
+    },
+    "country": "Israel",
+    "city": "Herzliya"
+  },
+  {
+    "id": "il-dromi-herzliya",
+    "name": "Dromi Beach",
+    "location": "Herzliya Marina",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [34.7930, 32.1585]
+    },
+    "country": "Israel",
+    "city": "Herzliya"
+  },
+  {
+    "id": "il-hilton-tlv",
+    "name": "Hilton Beach",
+    "location": "Tel Aviv Center",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [34.7692, 32.0902]
+    },
+    "country": "Israel",
+    "city": "Tel Aviv"
+  },
+  {
+    "id": "il-maravi-tlv",
+    "name": "Maravi Beach",
+    "location": "South Tel Aviv / Jaffa",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [34.7558, 32.0542]
+    },
+    "country": "Israel",
+    "city": "Tel Aviv"
+  },
+  {
+    "id": "il-al-gal-bat-yam",
+    "name": "Al Gal (Tubego)",
+    "location": "Bat Yam Center",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [34.7385, 32.0155]
+    },
+    "country": "Israel",
+    "city": "Bat Yam"
+  },
+  {
+    "id": "il-palmachim",
+    "name": "Palmachim (Hatzinorot)",
+    "location": "Palmachim Kibbutz",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [34.6980, 31.9295]
+    },
+    "country": "Israel",
+    "city": "Palmachim"
+  },
+  {
+    "id": "il-gil-ashdod",
+    "name": "Gil Beach",
+    "location": "Ashdod Center",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [34.6325, 31.8020]
+    },
+    "country": "Israel",
+    "city": "Ashdod"
+  },
+  {
+    "id": "il-goote-ashkelon",
+    "name": "Goote Beach",
+    "location": "Ashkelon Marina",
+    "geometry": {
+      "type": "Point",
+      "coordinates": [34.5550, 31.6825]
+    },
+    "country": "Israel",
+    "city": "Ashkelon"
+  }
+]
