@@ -1,16 +1,20 @@
 from contextlib import asynccontextmanager
-
+import os
 from fastapi import FastAPI
-
+from dotenv import load_dotenv
 from routes import health, beach
-from db import connect_to_mongo, close_mongo_connection
+from db import MongoHandler
 
+load_dotenv()
+
+MONGO_URL = os.getenv("MONGO_URL")
+DB_NAME = os.getenv("MONGO_DB_NAME")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    await connect_to_mongo()
-    yield
-    await close_mongo_connection()
+    app.state.db = MongoHandler(MONGO_URL, DB_NAME)
+    yield 
+    app.state.db.close_connection()
 
 
 app = FastAPI(title="Surf Forecast API", lifespan=lifespan)
