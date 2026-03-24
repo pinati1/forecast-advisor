@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
-// Import your new components (LocationSearch code omitted for brevity)
 import LocationSearch from "./components/LocationSearch"; 
 import BeachCard from "./components/BeachCard";
 
-// ... (API Base URL and Interfaces here) ...
+// 1. Make sure we have the API URL defined here
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000";
+
 interface Coordinates {
   lat: number;
   lng: number;
@@ -22,8 +23,42 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    // ... (Your exact same fetch logic goes here) ...
-  }, [coords]);
+    // 2. If we don't have coordinates yet (initial load), do nothing.
+    if (!coords) {
+      setClosestBeach(null);
+      return;
+    }
+
+    const controller = new AbortController();
+    setIsLoading(true);
+
+    // 3. The actual Fetch request to your Python backend!
+    const url = `${API_BASE_URL}/beaches/closest?lat=${coords.lat}&lng=${coords.lng}`;
+    
+    console.log("Fetching from:", url); // Let's log this so you can see it working!
+
+    fetch(url, { signal: controller.signal })
+      .then((response) => {
+        if (!response.ok) throw new Error("Beach not found or server error");
+        return response.json();
+      })
+      .then((data: Beach) => {
+        console.log("Backend returned beach:", data);
+        setClosestBeach(data);
+        setIsLoading(false);
+      })
+      .catch((error) => {
+        if (error.name === "AbortError") return;
+        console.error("Error fetching beach:", error);
+        setClosestBeach(null);
+        setIsLoading(false);
+      });
+
+    // Cleanup function in case the user types another location really fast
+    return () => {
+      controller.abort();
+    };
+  }, [coords]); // This tells React: "Run this effect EVERY TIME coords change!"
 
   return (
     <div className="page">
@@ -31,12 +66,10 @@ function App() {
       <div className="wave wave-front" />
 
       <main className="content">
-        {/* We pass setCoords down so the search bar can update the parent's state */}
         <LocationSearch onLocationSelect={setCoords} />
 
         {isLoading && <p className="loading-text">Finding the best waves...</p>}
 
-        {/* The UI is now perfectly encapsulated in its own file! */}
         {!isLoading && closestBeach && <BeachCard beach={closestBeach} />}
       </main>
     </div>
