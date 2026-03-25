@@ -1,10 +1,10 @@
-import { useRef } from "react";
-import { useJsApiLoader, Autocomplete } from "@react-google-maps/api";
+import { GeoapifyGeocoderAutocomplete, GeoapifyContext } from '@geoapify/react-geocoder-autocomplete';
 
-const GOOGLE_MAPS_API_KEY = import.meta.env.VITE_GOOGLE_MAPS_API_KEY ?? "";
-const libraries: ("places")[] = ["places"];
+// We import one of Geoapify's free pre-built CSS themes so the dropdown looks nice!
+import '@geoapify/geocoder-autocomplete/styles/minimal.css';
 
-// Define the shape of the data we send back to App.tsx
+const GEOAPIFY_API_KEY = import.meta.env.VITE_GEOAPIFY_API_KEY ?? "";
+
 interface Coordinates {
   lat: number;
   lng: number;
@@ -15,49 +15,31 @@ interface LocationSearchProps {
 }
 
 export default function LocationSearch({ onLocationSelect }: LocationSearchProps) {
-  const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: GOOGLE_MAPS_API_KEY,
-    libraries: libraries,
-  });
-
-  const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
-
-  const handlePlaceChanged = () => {
-    if (autocompleteRef.current !== null) {
-      const place = autocompleteRef.current.getPlace();
+  
+  // This function runs when the user clicks an address from the dropdown
+  const handlePlaceSelect = (value: any) => {
+    // Geoapify returns the data inside a 'properties' object
+    if (value && value.properties) {
+      console.log("Found location!", value.properties);
       
-      if (place.geometry?.location) {
-        // Pass the coordinates back up to the parent (App.tsx)
-        onLocationSelect({
-          lat: place.geometry.location.lat(),
-          lng: place.geometry.location.lng(),
-        });
-      }
+      // Pass the coordinates back to App.tsx
+      onLocationSelect({
+        lat: value.properties.lat,
+        // Notice Geoapify uses 'lon' for longitude, but our backend expects 'lng'
+        lng: value.properties.lon, 
+      });
     }
   };
 
-  // If Google Maps is still loading, show a disabled fallback input
-  if (!isLoaded) {
-    return (
-      <input 
-        className="location-input" 
-        type="text" 
-        placeholder="Loading map data..." 
-        disabled 
-      />
-    );
-  }
-
   return (
-    <Autocomplete
-      onLoad={(autocomplete) => (autocompleteRef.current = autocomplete)}
-      onPlaceChanged={handlePlaceChanged}
-    >
-      <input
-        className="location-input"
-        type="text"
-        placeholder="Search for your location..."
-      />
-    </Autocomplete>
+    <div style={{ position: "relative", zIndex: 10 }}>
+      {/* GeoapifyContext handles the API Key automatically */}
+      <GeoapifyContext apiKey={GEOAPIFY_API_KEY}>
+        <GeoapifyGeocoderAutocomplete
+          placeholder="Search for your location..."
+          placeSelect={handlePlaceSelect}
+        />
+      </GeoapifyContext>
+    </div>
   );
 }
