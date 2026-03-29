@@ -61,15 +61,24 @@ function App() {
   }, [coords]); // This tells React: "Run this effect EVERY TIME coords change!"
 
   return (
-    <div className="page">
-      <div className="wave wave-back" />
-      <div className="wave wave-front" />
+    /* Changed the background gradient to dark grays and blacks */
+    <div className="min-h-screen relative flex flex-col items-center justify-center bg-gradient-to-b from-gray-900 via-gray-800 to-black overflow-hidden">
+      
+      <div className="wave-container pointer-events-none">
+        <div className="wave wave-back" />
+        <div className="wave wave-front" />
+      </div>
 
-      <main className="content">
-        <LocationSearch onLocationSelect={setCoords} />
+      <main className="relative z-10 flex flex-col items-center justify-center w-full p-6">
+        
+        {/* Added 'animate-in' so the search bar glides up when the page loads */}
+        <div className="w-full max-w-md mb-8 animate-in">
+          <LocationSearch onLocationSelect={setCoords} />
+        </div>
 
-        {isLoading && <p className="loading-text">Finding the best waves...</p>}
+        {isLoading && <p className="text-white text-lg animate-pulse">Scanning the coast...</p>}
 
+        {/* The Beach Card will render here! */}
         {!isLoading && closestBeach && <BeachCard beach={closestBeach} />}
       </main>
     </div>
