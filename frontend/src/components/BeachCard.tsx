@@ -19,7 +19,11 @@ export default function BeachCard({ beach }: { beach: any }) {
       <div className="space-y-3 mt-6">
         <div className="flex justify-between items-center pb-3 border-b border-white/10">
           <span className="text-gray-400">Distance</span>
-          <span className="text-xl font-semibold">{beach.distance || "0"} km</span>
+          <span className="text-xl font-semibold">
+            {beach.driving_distance_meters 
+                ? (Number(beach.driving_distance_meters) / 1000)
+                .toFixed(1) : "0"} km
+          </span>
         </div>
         
         {/* You can add more stats here later once your Python backend sends them! */}
