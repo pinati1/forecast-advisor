@@ -4,6 +4,7 @@ from fastapi import FastAPI
 from dotenv import load_dotenv
 from routes import health, beach
 from db import MongoHandler
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
@@ -23,6 +24,13 @@ app = FastAPI(title="Surf Forecast API", lifespan=lifespan)
 app.include_router(health.router)
 app.include_router(beach.router)
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5173"], # Allow your React app
+    allow_credentials=True,
+    allow_methods=["*"], # Allow all types of requests (GET, POST, etc.)
+    allow_headers=["*"], # Allow all headers
+)
 
 @app.get("/")
 async def root():
