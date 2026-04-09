@@ -27,7 +27,7 @@ def get_surf_conditions(beach_id, lat, lng):
     if beach_id in surf_conditions_cache:
         cached_data = surf_conditions_cache[beach_id]
         if now - cached_data['timestamp'] < timedelta(hours=1):
-            print(f"⚡ Using cached surf data for {beach_id}")
+            print(f"⚡ Using cached surf data for {beach_id} at the time {now}")
             return cached_data['data']
 
     # 3. NO CACHE? CALL THE API
@@ -44,7 +44,7 @@ def get_surf_conditions(beach_id, lat, lng):
         response = requests.get(url, params=params)
         response.raise_for_status() # Throws an error if the API fails
         data = response.json()
-        
+
         print(f"DEBUG: Full Response: {response.json()}") # Look at this!
         # Safely extract the data (default to 0 if missing)
         current_weather = data.get("current", {})
