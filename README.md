@@ -6,7 +6,7 @@ A sleek, full-stack application that provides surfers with real-time insights in
 
 | Search State | Forecast View |
 | :---: | :---: |
-| ![Search Interface](docs\images\searchstate.png) | ![Forecast Results](docs\images\forecast_result.png) |
+| ![Search Interface](./docs/images/searchstate.png) | ![Forecast Results](./docs/images/forecast_result.png) |
 
 
 ## ✨ Key Features
