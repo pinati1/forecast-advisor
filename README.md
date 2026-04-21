@@ -77,6 +77,3 @@ FORECAST-ADVISOR/
    - **Frontend:** http://localhost:5173 (Vite default)
    - **Backend API:** http://localhost:8000/docs
 
-## 📄 License
-
-Distributed under the MIT License.
