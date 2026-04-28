@@ -8,3 +8,5 @@ async def test_get_all_beaches(client):
     assert response.status_code == 200
     # Check if the response is a list (typical for a forecast app)
     assert isinstance(response.json(), dict)
+
+    assert response.json() == {"message": "Surf Forecast API"}
